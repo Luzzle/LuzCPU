@@ -6,9 +6,19 @@
 #include <cstdlib>
 #include <vector>
 
+
 #define RAM_MAX 64
 
 using namespace std;
+
+
+struct Instruction{
+    int OPCODE = 0;
+    char* OPRAND1;
+    char* OPRAND2;
+};
+
+
 
 class CPU{
     public:
@@ -19,8 +29,23 @@ class CPU{
         int C = 0x0;
         int D = 0x0;      
 
-        vector<string> instructions = {};
+        vector<Instruction> instructions = {};
         
+
+        int read(int address){
+            Instruction instr = instructions[address];
+            
+            switch (instr.OPCODE){
+                case 0x1:
+                {
+                    
+                    PRT(instr.OPRAND1);
+                    break;
+                }
+            }
+        }
+
+
         int readReg(int* reg){
             int data = *reg;
             return data;
@@ -73,9 +98,9 @@ class CPU{
             return 0;
         }
 
-        int PRT(){
-            char print = (char)A;
-            printf("%c", print);
+        int PRT(const char* OPRAND1){
+            printf("%s", OPRAND1);
+            printf("%s", "\n");
             return 0;
         }
 
